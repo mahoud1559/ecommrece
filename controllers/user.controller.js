@@ -5,8 +5,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const register = asyncWrapper(async (req, res, next) => {
-  const { name, email, password, confirm_password, role } = req.body;
-  if (password !== confirm_password) {
+  const { name, email, password,confirmPassword, role } = req.body;
+  if (password !== confirmPassword) {
     const error = ERROR.create(
       "Passwords do not match",
       422,
@@ -14,6 +14,7 @@ const register = asyncWrapper(async (req, res, next) => {
     );
     return next(error);
   }
+
 
   const existsUser = await User.findOne({ email: email });
   if (existsUser) {
@@ -32,7 +33,7 @@ const register = asyncWrapper(async (req, res, next) => {
     email,
     role,
     password: hashedPassword,
-    confirm_password: hashedPassword,
+    confirmPassword: hashedPassword,
   });
 
   if (!process.env.JWT_SECRET_KEY) {

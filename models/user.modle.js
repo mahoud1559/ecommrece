@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema(
         message: "Password must be at least 6 characters long",
       },
     },
-    confirm_password: {
+    confirmPassword: {
       type: String,
       required: true,
       validate: {
